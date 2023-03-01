@@ -3,6 +3,8 @@ import './App.css';
 import SearchBar from './components/SearchBar';
 import Flightresults from './components/Flightresults';
 import PageCounter from './components/PageCounter';
+import axios from 'axios';
+
 
 const App = () => {
   const [flightData, setFlightData] = useState(null);
@@ -28,9 +30,7 @@ const App = () => {
   // const [searchQuery, setSearchQuery] = useState("");
   // // I assume for setting and holding whatever we get back
   // const [searchResult, setSearchResult] = useState("");
-  // // fuck if I know. A boolean that doesn't make sense.
-  // // apparently just a think for a "wait for this" message
-  // // to the user 
+
 
   // const getApiUrl = () => apiUrl;
 
@@ -40,9 +40,6 @@ const App = () => {
     // gets the shit from the API and for some reason we put it
     // in the useEffect, which we've never done before
     const loadData = async () => {
-      // fucking why though?
-
-      //+++++++++++++++Bri&Bina's commented junk+++++++++++++++
       setIsLoading(true);
       // console.log(dateFrom)
       //+++++++++++++++Bri&Bina's commented junk+++++++++++++++
@@ -50,17 +47,11 @@ const App = () => {
       // the usual except it calls that function that builds the url
       // with our search data
       const url = apiUrl;
-      const res = await fetch(url);
-      const data = await res.json();
+      const res = await axios.get(url);
+      setFlightData(res.data);
 
-      // this appears to be pulling the search data from some kind 
-      // of magic that generated it
-      setFlightData(data);
 
-      //+++++++++++++++Bri&Bina's commented junk+++++++++++++++
-      // console.log(data);
       setIsLoading(false);
-      //+++++++++++++++Bri&Bina's commented junk+++++++++++++++
     };
     if (apiUrl !== null) {
       loadData();
